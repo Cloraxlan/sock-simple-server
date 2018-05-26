@@ -6,8 +6,8 @@ import (
 	"github.com/Cloraxlan/master-s-sock"
 )
 
+type handle func()
 type Server struct {
-	handle func()
 	port   int
 	path   string
 	status bool
@@ -15,8 +15,9 @@ type Server struct {
 }
 
 func NewServer(handleFunction func(), port int, path string) *Server {
-	server := &Server{handle: handleFunction, port: port, path: path}
-	go startServer(server)
+	server := &Server{port: port, path: path}
+
+	startServer(server)
 	return server
 }
 
@@ -26,5 +27,5 @@ func startServer(server *Server) {
 		sock.ServeWs(server.hub, w, r)
 	})
 	go server.hub.Run()
-	go server.handle()
+
 }
