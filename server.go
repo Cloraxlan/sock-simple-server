@@ -14,7 +14,7 @@ type Server struct {
 	hub    *sock.Hub
 }
 
-func NewServer(handleFunction func(), port int, path string) *Server {
+func NewServer(port int, path string) *Server {
 	server := &Server{port: port, path: path}
 
 	startServer(server)
